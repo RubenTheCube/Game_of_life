@@ -23,6 +23,10 @@ typedef struct tObj{
 	void (* clear) (struct tObj *);
 }OBJECT, *PTR_OBJ; 
 
+void draw_object(PTR_OBJ this);
+void clear_object(PTR_OBJ this);
+
 OBJECT marker;
+
 
 #endif
