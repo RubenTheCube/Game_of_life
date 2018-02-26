@@ -50,7 +50,24 @@ int main(int argc, char **argv)
 	mark->posy = 4;
 	init_app();
 	graphic_initalize();
-
+	//skriv intro till spelet
+	char *s;
+	char skapare[] = "Rob's & Mr.O's";
+	char titel[] = "Game of life";
+	ascii_init();
+	ascii_gotoxy(1,1);
+	s = skapare;
+	while(*s)
+		ascii_write_char(*s++);
+	ascii_gotoxy(1,2);
+	s = titel;
+	while(*s)
+		ascii_write_char(*s++);
+	delay_milli(1000);
+	while(ascii_read_status() & 0x80)
+			;
+	delay_mikro(8);
+	delay_milli(4000);
 	
 	int shapex = 3, shapey = 3;
 	int shape[3][3] = {	{1,0,0},
