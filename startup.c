@@ -162,14 +162,13 @@ void cursor_mode(){
 	while(*s)
 		ascii_write_char(*s++);
 	delay_milli(1000);
-	while(ascii_read_status() & 0x80)
-			;
+	while(ascii_read_status() & 0x80);
 	delay_mikro(8);
 	delay_milli(4000);
 	while(looping){
 		uint8_t dir;
-		print_grid();
 		mark->clear(mark);
+		print_grid();
 		dir = keyb();
 		switch(dir){
 			case 6: mark->posx++; break;
@@ -179,7 +178,7 @@ void cursor_mode(){
 			case 5: 
 				grid[mark->posx + 2][mark->posy + 2] = 1;
 				break;
-			case 1: looping = false;
+			case 1: looping = false; break;			
 		}
 		mark->draw(mark);
 		delay_mikro(500);	
