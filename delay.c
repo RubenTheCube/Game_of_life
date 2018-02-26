@@ -1,7 +1,7 @@
 #include "delay.h"
 #include "types.h"
 
-void delay_250ns( void ){
+void delay_250ns( void ){ 
 	*STK_CTRL = 0;
 	*STK_LOAD =(168/4) - 1;
 	*STK_VAL = 0;
