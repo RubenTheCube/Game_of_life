@@ -3,7 +3,9 @@
  *
  */
 
-#include "defines.h"
+#include "grafikdisplay.h"
+#include "keypad.h"
+#include "portar.h"
  
 void startup(void) __attribute__((naked)) __attribute__((section (".start_section")) );
 
@@ -15,6 +17,17 @@ __asm volatile(
 	" BL main\n"				/* call main */
 	"_exit: B .\n"				/* never return */
 	) ;
+}
+
+void graphics_clear_area(int page, int add)
+{
+    for(int i = 0; i < page; i++)
+    {
+        graphics_write_command(LCD_SET_PAGE | i, B_CS1 | B_CS2);
+        graphics_write_command(LCD_SET_ADD | 0 , B_CS1 | B_CS2);
+        for(int j = 0; j < add; j++)
+            graphics_write_data(0, B_CS1 | B_CS2);
+    }
 }
 
 void init_app(void)
