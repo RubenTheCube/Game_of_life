@@ -4,7 +4,7 @@
 typedef unsigned char		byte;
 typedef unsigned short		word;
 typedef unsigned int		dword;
-typedef int					bool;
+typedef enum {false,true} 	bool;
 typedef signed char			int8_t;
 typedef unsigned char		uint8_t;
 typedef signed short		int16_t;

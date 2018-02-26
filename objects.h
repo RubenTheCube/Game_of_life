@@ -2,7 +2,6 @@
 #define OBJECTS_H
 
 typedef unsigned char uint8_t;
-typedef enum {false,true } bool;
 
 typedef struct {
 	uint8_t x;
@@ -13,13 +12,17 @@ typedef struct {
 	int numpoints;
 	int sizex;
 	int sizey;
-	POINT px[MAX_POINTS];
+	POINT px[20];
 }GEOMETRY, *PTR_GEO;
 
 typedef struct tObj{
 	PTR_GEO geo;
 	int speedx, speedy;
 	int posx, posy;
-}OBJECT, *PTR_OBJ;
+	void (* draw) (struct tObj *);
+	void (* clear) (struct tObj *);
+}OBJECT, *PTR_OBJ; 
+
+OBJECT marker;
 
 #endif
