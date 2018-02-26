@@ -140,6 +140,32 @@ void clear_grid(){
 
 void cursor_mode(){
 	bool looping = true;
+	char *s;
+	ascii_write_cmd(1);
+	delay_milli(2);
+	char instruktion[] = "make din organism";
+	ascii_gotoxy(1,1);
+	s = instruktion;
+	while(*s)
+		ascii_write_char(*s++);
+	ascii_gotoxy(1,1);
+	delay_milli(4000);
+	ascii_write_cmd(1);
+	delay_milli(2);
+	char instruktion1[] = "press 5 to place";
+	s = instruktion1;
+	while(*s)
+		ascii_write_char(*s++);
+	ascii_gotoxy(1,2);
+	char instruktion2[] = "2 ^| 4 <-| 6 ->| 8 v";
+	s = instruktion2;
+	while(*s)
+		ascii_write_char(*s++);
+	delay_milli(1000);
+	while(ascii_read_status() & 0x80)
+			;
+	delay_mikro(8);
+	delay_milli(4000);
 	while(looping){
 		uint8_t dir;
 		print_grid();
