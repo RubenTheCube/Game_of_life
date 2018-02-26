@@ -49,7 +49,7 @@ int main(int argc, char **argv)
 	mark->posx = 4;
 	mark->posy = 4;
 	init_app();
-	graphics_initialize();
+	graphic_initalize();
 
 	
 	int shapex = 3, shapey = 3;
