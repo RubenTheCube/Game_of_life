@@ -6,6 +6,7 @@
 #include "grafikdisplay.h"
 #include "keypad.h"
 #include "portar.h"
+#include "objects.h"
  
 void startup(void) __attribute__((naked)) __attribute__((section (".start_section")) );
 
