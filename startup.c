@@ -32,18 +32,18 @@ void graphics_clear_area(int page, int add)
 
 void init_app(void)
 {
-	*portModer = 0x55555555;//0-15 utgångar
-	*portOtyper = 0x00000000; 	// outputs are push/pull 
-	*portOspeedr = 0x55555555; // medium speed 
-	*portPupdr = 0x55550000; 
+	GPIO_E.moder = 0x55555555;//0-15 utgångar
+	GPIO_E.otyper = 0x00000000; 	// outputs are push/pull 
+	GPIO_E.ospeedr = 0x55555555; // medium speed 
+	GPIO_E.pupdr = 0x55550000; 
 	
 	
-	*GPIO_D_Moder = 0x55005555;
-	*GPIO_D_Otyper &= 0xFFFF00FF;//otyper
-	*GPIO_D_Otyper |= 0x00000000;
+	GPIO_D.moder = 0x55005555;
+	GPIO_D.otyper &= 0xFFFF00FF;//otyper
+	GPIO_D.otyper |= 0x00000000;
 	
-	*GPIO_D_Pupdr &= 0x0000FFFF;//pupdr
-	*GPIO_D_Pupdr |= 0x00AA0000;
+	GPIO_E.pupdr &= 0x0000FFFF;//pupdr
+	GPIO_E.pupdr |= 0x00AA0000;
 	
 }
 
