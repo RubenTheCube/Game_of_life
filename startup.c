@@ -20,17 +20,6 @@ __asm volatile(
 	) ;
 }
 
-void graphics_clear_area(int page, int add)
-{
-    for(int i = 0; i < page; i++)
-    {
-        graphics_write_command(LCD_SET_PAGE | i, B_CS1 | B_CS2);
-        graphics_write_command(LCD_SET_ADD | 0 , B_CS1 | B_CS2);
-        for(int j = 0; j < add; j++)
-            graphics_write_data(0, B_CS1 | B_CS2);
-    }
-}
-
 void init_app(void)
 {
 	GPIO_E.moder = 0x55555555;//0-15 utgångar

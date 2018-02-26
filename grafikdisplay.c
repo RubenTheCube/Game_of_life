@@ -27,7 +27,7 @@ void select_controller(uint8_t controller){
 		//slå av CS1 och slå på CS2 
 		case B_CS2: GPIO_E.odrLow &= ~(B_CS1 | B_SELECT); 
 		GPIO_E.odrLow |= B_CS2; break;
-		//slå på båda
+		//slPå på båda
 		case B_CS1 | B_CS2: GPIO_E.odrLow |= (B_CS1 | B_CS2);
 		GPIO_E.odrLow &= ~B_SELECT; break;
 	}
