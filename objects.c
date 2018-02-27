@@ -18,19 +18,19 @@ OBJECT marker =
 void draw_object(PTR_OBJ this){
 	POINT *ptr, *end_ptr;
 	ptr = &(this->geo->px);
+	
 	end_ptr = &(this->geo->px[this->geo->numpoints]); //pekar faktiskt på Pointen efter den sista använda punkten (8'an) men eftersom det är < täcken i for loopen så funkar det fint
-    for(ptr; ptr < end_ptr; ptr++){
+    for(ptr; ptr < end_ptr; ptr++)
 		pixel(this->posx + ptr->x,this->posy + ptr->y,1);
-    }
 }
 
 void clear_object(PTR_OBJ this){
 	POINT *ptr, *end_ptr;
 	ptr = &(this->geo->px);
+	
 	end_ptr = &(this->geo->px[this->geo->numpoints]); //pekar faktiskt på Pointen efter den sista använda punkten (8'an) men eftersom det är < täcken i for loopen så funkar det fint
-    for(ptr; ptr < end_ptr; ptr++){
+    for(ptr; ptr < end_ptr; ptr++)
 		pixel(this->posx + ptr->x,this->posy + ptr->y,0);
-    }
 }
 
 #endif
