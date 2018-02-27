@@ -94,6 +94,7 @@ int main(int argc, char **argv)
 	clear_buffers();
 	graphic_clear_screen();
 	print_grid();
+	clear_buffer(1);
 	swap_buffers();
 	int rv = 0;
 	while(1)
