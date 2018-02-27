@@ -109,7 +109,7 @@ int main(int argc, char **argv)
 		//delay_mikro(500);
 	}
 }
-
+/*
 void print_grid(){
 	for(int i = 0; i < gridx; i++){
 		for(int j = 0; j < gridy; j++){
@@ -126,7 +126,7 @@ void clear_grid(){
 		}
 	}
 }
-
+*/
 void cursor_mode(){
 	bool looping = true;
 	char *s;
