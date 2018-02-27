@@ -64,8 +64,7 @@ int main(int argc, char **argv)
 	while(*s)
 		ascii_write_char(*s++);
 	delay_milli(1000);
-	while(ascii_read_status() & 0x80)
-			;
+	while(ascii_read_status() & 0x80);
 	delay_mikro(8);
 	delay_milli(4000);
 	
@@ -73,7 +72,7 @@ int main(int argc, char **argv)
 	int shape[3][3] = {	{1,0,0},
 						{0,1,1},
 						{1,1,0}};
-						
+	mark->draw(mark);					
 	clear_grid();
 	cursor_mode();
 	copy_grid_to_buffer();
@@ -164,7 +163,7 @@ void cursor_mode(){
 	delay_milli(1000);
 	while(ascii_read_status() & 0x80);
 	delay_mikro(8);
-	delay_milli(4000);
+	delay_milli(1000);
 	while(looping){
 		uint8_t dir;
 		mark->clear(mark);

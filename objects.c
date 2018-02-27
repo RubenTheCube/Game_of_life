@@ -16,18 +16,20 @@ OBJECT marker =
 };
 
 void draw_object(PTR_OBJ this){
-    int x,y;
-    for(y = 0; this->geo->sizex*y < this->geo->numpoints;y++){
-        for(x = 0; x < this->geo->sizex; x++)
-            pixel(this->posx + this->geo->px[this->geo->sizex*y+x].x,this->posy + this->geo->px[this->geo->sizex*y+x].y,1);
+	POINT *ptr, *end_ptr;
+	ptr = &(this->geo->px);
+	end_ptr = &(this->geo->px[this->geo->numpoints]); //pekar faktiskt på Pointen efter den sista använda punkten (8'an) men eftersom det är < täcken i for loopen så funkar det fint
+    for(ptr; ptr < end_ptr; ptr++){
+		pixel(this->posx + ptr->x,this->posy + ptr->y,1);
     }
 }
 
 void clear_object(PTR_OBJ this){
-    int x = 0,y = 0;
-    for(y = 0; this->geo->sizex*y < this->geo->numpoints;y++){
-        for(x = 0; x < this->geo->sizex; x++)
-            pixel(this->posx + this->geo->px[this->geo->sizex*y+x].x,this->posy + this->geo->px[this->geo->sizex*y+x].y,0);
+	POINT *ptr, *end_ptr;
+	ptr = &(this->geo->px);
+	end_ptr = &(this->geo->px[this->geo->numpoints]); //pekar faktiskt på Pointen efter den sista använda punkten (8'an) men eftersom det är < täcken i for loopen så funkar det fint
+    for(ptr; ptr < end_ptr; ptr++){
+		pixel(this->posx + ptr->x,this->posy + ptr->y,0);
     }
 }
 
