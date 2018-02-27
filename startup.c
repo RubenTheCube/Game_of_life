@@ -90,7 +90,6 @@ int main(int argc, char **argv)
 		}
 	}
 */
-	//print_grid();
 	cursor_mode();
 	clear_buffers();
 	graphic_clear_screen();
@@ -108,15 +107,9 @@ int main(int argc, char **argv)
 			}
 		}
 		
-		
 		swap_buffers();
 		delay_milli(40);
 		
-		
-		//graphics_clear_area(2, 20);
-		//print_grid();		
-		
-		//delay_mikro(500);
 	}
 }
 
