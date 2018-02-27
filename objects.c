@@ -19,7 +19,7 @@ void draw_object(PTR_OBJ this){
     int x,y;
     for(y = 0; this->geo->sizex*y < this->geo->numpoints;y++){
         for(x = 0; x < this->geo->sizex; x++)
-            pixel(this->posx + this->geo->px[this->geo->sizex*y+x].x,this->posy + this->geo->px[this->geo->sizex*y+x].y,1);
+            pixel_dubbelbuffer(this->posx + this->geo->px[this->geo->sizex*y+x].x,this->posy + this->geo->px[this->geo->sizex*y+x].y,1);
     }
 }
 
@@ -27,7 +27,7 @@ void clear_object(PTR_OBJ this){
     int x = 0,y = 0;
     for(y = 0; this->geo->sizex*y < this->geo->numpoints;y++){
         for(x = 0; x < this->geo->sizex; x++)
-            pixel(this->posx + this->geo->px[this->geo->sizex*y+x].x,this->posy + this->geo->px[this->geo->sizex*y+x].y,0);
+            pixel_dubbelbuffer(this->posx + this->geo->px[this->geo->sizex*y+x].x,this->posy + this->geo->px[this->geo->sizex*y+x].y,0);
     }
 }
 

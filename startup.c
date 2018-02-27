@@ -74,7 +74,7 @@ int main(int argc, char **argv)
 			;
 	delay_mikro(8);
 	delay_milli(4000);
-	
+	mark->draw(mark);
 	//int shapex = 3, shapey = 3;
 	//int shape[3][3] = {	{1,0,0},{0,1,1},{1,1,0}};
 						
@@ -109,7 +109,7 @@ int main(int argc, char **argv)
 		//delay_mikro(500);
 	}
 }
-
+/*
 void print_grid(){
 	for(int i = 0; i < gridx; i++){
 		for(int j = 0; j < gridy; j++){
@@ -126,7 +126,7 @@ void clear_grid(){
 		}
 	}
 }
-
+*/
 void cursor_mode(){
 	bool looping = true;
 	char *s;
@@ -157,7 +157,7 @@ void cursor_mode(){
 	while(looping){
 		uint8_t dir;
 		mark->clear(mark);
-		print_grid();
+//		print_grid();
 		dir = keyb();
 		switch(dir){
 			case 6: mark->posx++; break;
@@ -165,7 +165,7 @@ void cursor_mode(){
 			case 2: mark->posy++; break;
 			case 8: mark->posy--; break;
 			case 5: 
-				grid[mark->posx + 2][mark->posy + 2] = 1;
+				//grid[mark->posx + 2][mark->posy + 2] = 1;
 				break;
 			case 1: looping = false; break;			
 		}
