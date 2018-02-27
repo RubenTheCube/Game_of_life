@@ -37,9 +37,10 @@ void init_app(void)
 	
 }
 
-#define gridx 15
-#define gridy 15
+#define gridx 128
+#define gridy 64
 PTR_OBJ mark = &marker;
+uint8_t temp_grid[gridx][gridy];
 
 //int grid[gridx][gridy], gridbuffer[gridx][gridy];
 
@@ -54,7 +55,8 @@ int main(int argc, char **argv)
 	ascii_write_cmd(1);
 	graphic_clear_screen();
 	clear_buffers();
-	
+	clear_grid();
+	/*
 	//skriv intro till spelet
 	char *s;
 	char skapare[] = "Rob's & Mr.O's";
@@ -73,8 +75,8 @@ int main(int argc, char **argv)
 			;
 	delay_mikro(8);
 	delay_milli(4000);
-	mark->draw(mark);
-	swap_buffers();
+	 */
+
 	//int shapex = 3, shapey = 3;
 	//int shape[3][3] = {	{1,0,0},{0,1,1},{1,1,0}};
 						
@@ -89,17 +91,25 @@ int main(int argc, char **argv)
 	}
 */
 	//print_grid();
-	
+	cursor_mode();
+	clear_buffers();
+	graphic_clear_screen();
+	print_grid();
+	swap_buffers();
 	int rv = 0;
 	while(1)
 	{
-		check_neighbors(20,7);
 		clear_buffer(0);
-		pixel_dubbelbuffer(20,7);
-		pixel_dubbelbuffer(21,8);
-				
-		swap_buffers();
+		for(int i = 0; i < 127; i++){
+			for(int j = 0; j < 63; j++){
+				rv = check_neighbors(i,j);
+				if(rv == 3 || rv == 12 || rv == 13) //3 i alla fall, 12/13 pupulated med 2/3 grannar
+ 					pixel_dubbelbuffer(i,j);
+			}
+		}
 		
+		
+		swap_buffers();
 		delay_milli(40);
 		
 		
@@ -109,12 +119,12 @@ int main(int argc, char **argv)
 		//delay_mikro(500);
 	}
 }
-/*
+
 void print_grid(){
 	for(int i = 0; i < gridx; i++){
 		for(int j = 0; j < gridy; j++){
-			if(grid[i][j])			
-				pixel(i,j,1);
+			if(temp_grid[i][j])			
+				pixel_dubbelbuffer(i,j);
 		}
 	}	
 }
@@ -122,13 +132,14 @@ void print_grid(){
 void clear_grid(){
 	for(int i = 0; i < gridx; i++){
 		for(int j = 0; j < gridy; j++){
-			grid[i][j] = 0;
+			temp_grid[i][j] = 0;
 		}
 	}
 }
-*/
+
 void cursor_mode(){
 	bool looping = true;
+/*
 	char *s;
 	ascii_write_cmd(1);
 	delay_milli(2);
@@ -154,10 +165,10 @@ void cursor_mode(){
 	while(ascii_read_status() & 0x80);
 	delay_mikro(8);
 	delay_milli(4000);
+	*/
+	
 	while(looping){
 		uint8_t dir;
-		mark->clear(mark);
-//		print_grid();
 		dir = keyb();
 		switch(dir){
 			case 6: mark->posx++; break;
@@ -165,11 +176,19 @@ void cursor_mode(){
 			case 2: mark->posy++; break;
 			case 8: mark->posy--; break;
 			case 5: 
-				//grid[mark->posx + 2][mark->posy + 2] = 1;
+				temp_grid[mark->posx + 2][mark->posy + 2] = 1;
 				break;
 			case 1: looping = false; break;			
 		}
+		clear_buffer(0);
 		mark->draw(mark);
+		for(int x = 0; x < 128; x++){
+			for(int y = 0; y < 64; y++){
+				if(temp_grid[x][y])
+					pixel_dubbelbuffer(x,y);
+			}
+		}
+		swap_buffers();
 		delay_mikro(500);	
 	}
 }

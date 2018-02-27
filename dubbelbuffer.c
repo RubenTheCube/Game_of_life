@@ -81,7 +81,10 @@ int check_neighbors(int x, int y){
 
 	mask = 1<<(y % 8);
 	if(front_buffer[index - 1]  & mask) 		rv++;//kollar till vänster
+	if(front_buffer[index] & mask) 				rv+=10;//hax, special encoding som ingen kan lista ut
 	if(front_buffer[index + 1]  & mask) 		rv++;//kollar till höger
+	
+
 
 	mask = 1<<( (y + 1) % 8);
 	if(front_buffer[index  + nere - 1]  & mask) rv++;//kollar nere till vänster
