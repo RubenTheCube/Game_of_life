@@ -43,6 +43,8 @@ PTR_OBJ mark = &marker;
 
 int grid[gridx][gridy], gridbuffer[gridx][gridy];
 
+bool key_input(uint8_t input); //den klaga på denna funktion, definerade den här, funka sen
+
 int main(int argc, char **argv)
 {
 	
@@ -72,51 +74,42 @@ int main(int argc, char **argv)
 	int shape[3][3] = {	{1,0,0},
 						{0,1,1},
 						{1,1,0}};
-	mark->draw(mark);					
-	clear_grid();
-	cursor_mode();
-	copy_grid_to_buffer();
+	
 				
 /*
-	for(int i = 1; i <= shapex; i++){		//copy shape to grid
+	for(int i = 1; i <= shapex; i++){		//copy shape to grid, this method could be used to make a glider gun, or other complex structions
 		for(int j = 1; j <= shapey; j++){
 			grid[i][j] = shape[j-1][i-1]; 	//this needs to be this wonky
 		}
 	}
 */
-	print_grid();
-
-	int rv = 0;
-	while(1)
+	
+	bool looping;
+	uint8_t input;
+	while(1) //main loop
 	{
-		for(int i = 0; i < gridx; i++){
-			for(int j = 0; j < gridy; j++){
-				rv = check_neighbors(i,j);
-				if(grid[i][j]){		//active pixel
-					if(rv <= 1 || rv >= 4)
-						gridbuffer[i][j] = 0;		//pixel dies
-				}
-				else{						//unactive pixel
-					if(rv == 3)
-						gridbuffer[i][j]= 1;		//pixel born
+		looping = true;
+		graphics_clear_area(2, 20);
+		clear_grid();
+		cursor_mode();
+		print_grid();
+		copy_grid_to_buffer();
+		while (looping){ 			//simulator loop
+			for(int i = 0; i < gridx; i++){
+				for(int j = 0; j < gridy; j++){
+					pixel_born_or_dies(i,j);
 				}
 			}
+			input = keyb();
+			switch (input){
+				case 3: looping = false; break;
+			}
+			clear_outer_frame();
+			copy_buffer_to_grid();
+			graphics_clear_area(2, 20);
+			print_grid();	
+			//delay_mikro(500);	
 		}
-		
-		for(int i = 0; i < gridx; i++)	//clear outer "frame"
-			gridbuffer[i][14] = 0;
-		for(int i = 0; i < gridx; i++)
-			gridbuffer[14][i] = 0;
-		for(int i = 0; i < gridx; i++)
-			gridbuffer[i][0] = 0;
-		for(int i = 0; i < gridx; i++)
-			gridbuffer[0][i] = 0;
-		
-		copy_buffer_to_grid();
-		graphics_clear_area(2, 20);
-		print_grid();		
-		
-		//delay_mikro(500);
 	}
 }
 
@@ -140,6 +133,7 @@ void clear_grid(){
 void cursor_mode(){
 	bool looping = true;
 	char *s;
+	uint8_t input;
 	ascii_write_cmd(1);
 	delay_milli(2);
 	char instruktion[] = "make din organism";
@@ -164,21 +158,13 @@ void cursor_mode(){
 	while(ascii_read_status() & 0x80);
 	delay_mikro(8);
 	delay_milli(1000);
-	while(looping){
-		uint8_t dir;
+	
+	while(1){ //key input loop
 		mark->clear(mark);
 		print_grid();
-		dir = keyb();
-		switch(dir){
-			case 6: mark->posx++; break;
-			case 4: mark->posx--; break;
-			case 2: mark->posy++; break;
-			case 8: mark->posy--; break;
-			case 5: 
-				grid[mark->posx + 2][mark->posy + 2] = 1;
-				break;
-			case 1: looping = false; break;			
-		}
+		input = keyb();
+		if(key_input(input)) //breaks when 1 is pressed
+			break;
 		mark->draw(mark);
 		delay_mikro(500);	
 	}
@@ -214,3 +200,39 @@ int check_neighbors(int i, int j){
 	return rv;
 }
 
+void pixel_born_or_dies(int x, int y){
+	int rv = check_neighbors(x,y);
+	if(grid[x][y]){		//active pixel
+		if(rv <= 1 || rv >= 4)
+			gridbuffer[x][y] = 0;		//pixel dies
+	}
+	else{						//unactive pixel
+		if(rv == 3)
+			gridbuffer[x][y]= 1;		//pixel born
+	}
+}
+
+void clear_outer_frame(void){		//clear outer "frame", avoids some bugs
+	for(int i = 0; i < gridx; i++)	
+		gridbuffer[i][14] = 0;
+	for(int i = 0; i < gridx; i++)
+		gridbuffer[14][i] = 0;
+	for(int i = 0; i < gridx; i++)
+		gridbuffer[i][0] = 0;
+	for(int i = 0; i < gridx; i++)
+		gridbuffer[0][i] = 0;
+}
+
+bool key_input(uint8_t input){ //returns true when you exit current mode
+	switch(input){
+		case 6: mark->posx++; break;
+		case 4: mark->posx--; break;
+		case 2: mark->posy--; break;
+		case 8: mark->posy++; break;
+		case 5: 
+			grid[mark->posx + 2][mark->posy + 2] = 1;
+			break;
+		case 1: return true;			
+	}
+	return false;
+}
