@@ -84,6 +84,7 @@ int main(int argc, char **argv)
 	
 	bool looping;
 	uint8_t input;
+	int delay = 0;
 	while(1) //main loop
 	{
 		looping = true;
@@ -101,12 +102,17 @@ int main(int argc, char **argv)
 			input = keyb();
 			switch (input){
 				case 3: looping = false; break;
+				case 7: delay += 100; break;
+				case 9: 
+					delay -= 100; 
+					if(delay < 0) delay = 0;
+					break;
 			}
 			clear_outer_frame();
 			copy_buffer_to_grid();
 			graphics_clear_area(2, 20);
 			print_grid();	
-			//delay_mikro(500);	
+			delay_milli(delay);	
 		}
 	}
 }
