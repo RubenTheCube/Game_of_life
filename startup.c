@@ -51,7 +51,6 @@ int main(int argc, char **argv)
 	init_app();
 	graphic_initalize();
 	ascii_init();
-	ascii_init();
 	ascii_write_cmd(1);
 	graphic_clear_screen();
 	clear_buffers();
