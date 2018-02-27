@@ -74,6 +74,7 @@ int main(int argc, char **argv)
 	delay_mikro(8);
 	delay_milli(4000);
 	mark->draw(mark);
+	swap_buffers();
 	//int shapex = 3, shapey = 3;
 	//int shape[3][3] = {	{1,0,0},{0,1,1},{1,1,0}};
 						
