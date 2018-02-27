@@ -51,6 +51,8 @@ int main(int argc, char **argv)
 	init_app();
 	graphic_initalize();
 	ascii_init();
+	ascii_init();
+	ascii_write_cmd(1);
 	graphic_clear_screen();
 	clear_buffers();
 	
@@ -91,14 +93,15 @@ int main(int argc, char **argv)
 	int rv = 0;
 	while(1)
 	{
-		check_neighbors(50,50);
+		check_neighbors(20,7);
 		clear_buffer(0);
-		pixel_dubbelbuffer(50,50);
-		pixel_dubbelbuffer(49,49);
-		
+		pixel_dubbelbuffer(20,7);
+		pixel_dubbelbuffer(21,8);
+				
 		swap_buffers();
 		
 		delay_milli(40);
+		
 		
 		//graphics_clear_area(2, 20);
 		//print_grid();		

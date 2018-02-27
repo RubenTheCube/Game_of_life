@@ -67,17 +67,26 @@ void pixel_dubbelbuffer(int x, int y){//0-indexerad!!
 
 int check_neighbors(int x, int y){
 	int rv = 0;
-	uint8_t mask = 1<<(y%8);
+	int mask;
 	int index = x + (y/8)*128; //detta är för den punkten som som ska checkas alltså mitten punkten
 	//testar från övre vänstra hörn till nedre högre hörn genom att följa raderna vänster till höger
-	if(front_buffer[index - 128 - 1] & mask)	rv++;
-	if(front_buffer[index - 128]	) 	rv++;
-	if(front_buffer[index - 128 + 1])	rv++;
-	if(front_buffer[index - 1]		) 	rv++;
-	if(front_buffer[index + 1]		) 	rv++;
-	if(front_buffer[index + 128 - 1])	rv++;
-	if(front_buffer[index + 128]	) 	rv++;
-	if(front_buffer[index + 128 + 1])	rv++;
+	int uppe = ((y % 8 ) == 0) ? 128 : 0;
+	int nere  = ((y % 8 ) == 7) ? 128 : 0;
+
+
+	mask = 1<<( ( y-1) % 8);
+	if(front_buffer[index - uppe - 1]  & mask) 	rv++;//kollar uppe till vänster
+	if(front_buffer[index - uppe]  & mask) 		rv++;//kollar uppe i mitten
+	if(front_buffer[index  - uppe + 1]  & mask) rv++;//kollar uppe till höger
+
+	mask = 1<<(y % 8);
+	if(front_buffer[index - 1]  & mask) 		rv++;//kollar till vänster
+	if(front_buffer[index + 1]  & mask) 		rv++;//kollar till höger
+
+	mask = 1<<( (y + 1) % 8);
+	if(front_buffer[index  + nere - 1]  & mask) rv++;//kollar nere till vänster
+	if(front_buffer[index + nere ]  & mask) 	rv++;//kollar nere i mitten
+	if(front_buffer[index +nere + 1]  & mask) 	rv++;//kollar nere till höger
 			
 	return rv;
 }
