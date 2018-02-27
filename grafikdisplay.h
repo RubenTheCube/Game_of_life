@@ -16,7 +16,7 @@
 #define B_RST 0x20
 #define B_CS2 0x10
 #define B_CS1 0x8
-
+//Detta är för grafikdisplay.c
 void graphic_ctrl_bit_set(uint8_t x);
 void graphic_ctrl_bit_clear(uint8_t x);
 void select_controller(uint8_t controller);
@@ -30,5 +30,15 @@ void graphic_initalize(void);
 void graphic_clear_screen(void);
 void pixel(int x, int y, int set);
 void graphics_clear_area(int page, int add);
+//slut på grafikdisplay.c
 
+//Detta är för dubbelbuffer.c
+void clear_buffer(uint8_t val);
+void clear_buffers(void);
+void swap_buffers(void);
+void graphic_draw_screen(void);
+void pixel_dubbelbuffer(int x, int y);
+int check_neighbors(int x, int y);
+
+//slut på dubbelbuffer.c
 #endif

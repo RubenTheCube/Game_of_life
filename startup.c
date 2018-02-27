@@ -41,20 +41,24 @@ void init_app(void)
 #define gridy 15
 PTR_OBJ mark = &marker;
 
-int grid[gridx][gridy], gridbuffer[gridx][gridy];
+//int grid[gridx][gridy], gridbuffer[gridx][gridy];
 
 int main(int argc, char **argv)
 {
-	
+	//init
 	mark->posx = 4;
 	mark->posy = 4;
 	init_app();
 	graphic_initalize();
+	ascii_init();
+	graphic_clear_screen();
+	clear_buffers();
+	
 	//skriv intro till spelet
 	char *s;
 	char skapare[] = "Rob's & Mr.O's";
 	char titel[] = "Game of life";
-	ascii_init();
+
 	ascii_gotoxy(1,1);
 	s = skapare;
 	while(*s)
@@ -69,14 +73,11 @@ int main(int argc, char **argv)
 	delay_mikro(8);
 	delay_milli(4000);
 	
-	int shapex = 3, shapey = 3;
-	int shape[3][3] = {	{1,0,0},
-						{0,1,1},
-						{1,1,0}};
+	//int shapex = 3, shapey = 3;
+	//int shape[3][3] = {	{1,0,0},{0,1,1},{1,1,0}};
 						
-	clear_grid();
-	cursor_mode();
-	copy_grid_to_buffer();
+	//clear_grid();
+	//cursor_mode();
 				
 /*
 	for(int i = 1; i <= shapex; i++){		//copy shape to grid
@@ -85,37 +86,22 @@ int main(int argc, char **argv)
 		}
 	}
 */
-	print_grid();
-
+	//print_grid();
+	
 	int rv = 0;
 	while(1)
 	{
-		for(int i = 0; i < gridx; i++){
-			for(int j = 0; j < gridy; j++){
-				rv = check_neighbors(i,j);
-				if(grid[i][j]){		//active pixel
-					if(rv <= 1 || rv >= 4)
-						gridbuffer[i][j] = 0;		//pixel dies
-				}
-				else{						//unactive pixel
-					if(rv == 3)
-						gridbuffer[i][j]= 1;		//pixel born
-				}
-			}
-		}
+		check_neighbors(50,50);
+		clear_buffer(0);
+		pixel_dubbelbuffer(50,50);
+		pixel_dubbelbuffer(49,49);
 		
-		for(int i = 0; i < gridx; i++)	//clear outer "frame"
-			gridbuffer[i][14] = 0;
-		for(int i = 0; i < gridx; i++)
-			gridbuffer[14][i] = 0;
-		for(int i = 0; i < gridx; i++)
-			gridbuffer[i][0] = 0;
-		for(int i = 0; i < gridx; i++)
-			gridbuffer[0][i] = 0;
+		swap_buffers();
 		
-		copy_buffer_to_grid();
-		graphics_clear_area(2, 20);
-		print_grid();		
+		delay_milli(40);
+		
+		//graphics_clear_area(2, 20);
+		//print_grid();		
 		
 		//delay_mikro(500);
 	}
@@ -183,35 +169,5 @@ void cursor_mode(){
 		mark->draw(mark);
 		delay_mikro(500);	
 	}
-}
-
-void copy_grid_to_buffer(){
-	for(int i = 0; i < gridx; i++){			//copy grid to gridbuffer
-		for(int j = 0; j < gridy; j++){
-			gridbuffer[i][j] = grid[i][j];
-		}
-	}
-}
-
-void copy_buffer_to_grid(){
-	for(int i = 0; i < gridx; i++){		//copy gridbuffer to grid
-		for(int j = 0; j < gridy; j++)
-			grid[i][j] = gridbuffer[i][j];
-	}
-}
-
-int check_neighbors(int i, int j){
-	int rv = 0;
-	
-	if(grid[(i-1)%(gridx-1)] [(j-1)%(gridx-1)])	rv++;
-	if(grid[(i-1)%(gridx-1)] [j]) 		rv++;
-	if(grid[(i-1)%(gridx-1)] [(j+1)%(gridx-1)])	rv++;
-	if(grid[i][(j-1)%(gridx-1)]) 		rv++;
-	if(grid[i][(j+1)%(gridx-1)]) 		rv++;
-	if(grid[(i+1)%(gridx-1)][(j-1)%(gridx-1)])	rv++;
-	if(grid[(i+1)%(gridx-1)][j]) 		rv++;
-	if(grid[(i+1)%(gridx-1)][(j+1)%(gridx-1)])	rv++;
-			
-	return rv;
 }
 
