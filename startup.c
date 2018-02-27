@@ -74,8 +74,6 @@ int main(int argc, char **argv)
 	int shape[3][3] = {	{1,0,0},
 						{0,1,1},
 						{1,1,0}};
-	
-				
 /*
 	for(int i = 1; i <= shapex; i++){		//copy shape to grid, this method could be used to make a glider gun, or other complex structions
 		for(int j = 1; j <= shapey; j++){
