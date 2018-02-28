@@ -43,22 +43,22 @@ void init_app(void)
 #define glider_guny 15
 
 PTR_OBJ mark = &marker;
-uint8_t temp_grid[gridx][gridy];			   //1					   3					 5					   7
-int glider_gun[glider_guny][glider_gunx] = {{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,1,1, 0,0,0,0,0, 0,0,0,0,1, 1,0,0},//1
-											{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,1,0,1, 0,0,0,0,0, 0,0,0,0,1, 1,0,0},
-											{1,1,0,0,0, 0,0,0,0,1, 1,0,0,0,0, 0,0,0,0,0, 0,0,1,1,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},
-											{1,1,0,0,0, 0,0,0,1,0, 1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},
-											{0,0,0,0,0, 0,0,0,1,1, 0,0,0,0,0, 0,1,1,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},//5
-											{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1,0,1,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},
-											{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},
-											{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 1,1,0},
-											{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 1,0,1},
-											{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 1,0,0},//10
-											{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},
-											{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},
-											{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1, 1,1,0,0,0, 0,0,0,0,0, 0,0,0},
-											{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},
-											{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 1,0,0,0,0, 0,0,0,0,0, 0,0,0}//15
+uint8_t temp_grid[gridx][gridy];				   //1					   3					 5					   7
+uint8_t glider_gun[glider_guny][glider_gunx] = {{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,1,1, 0,0,0,0,0, 0,0,0,0,1, 1,0,0},//1
+												{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,1,0,1, 0,0,0,0,0, 0,0,0,0,1, 1,0,0},
+												{1,1,0,0,0, 0,0,0,0,1, 1,0,0,0,0, 0,0,0,0,0, 0,0,1,1,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},
+/*beöver ligga här, får inte plats på stacken*/ {1,1,0,0,0, 0,0,0,1,0, 1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},
+												{0,0,0,0,0, 0,0,0,1,1, 0,0,0,0,0, 0,1,1,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},//5
+												{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1,0,1,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},
+												{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},
+												{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 1,1,0},
+												{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 1,0,1},
+												{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 1,0,0},//10
+												{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},
+												{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},
+												{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1, 1,1,0,0,0, 0,0,0,0,0, 0,0,0},
+												{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},
+												{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 1,0,0,0,0, 0,0,0,0,0, 0,0,0}//15
 };
 
 //int grid[gridx][gridy], gridbuffer[gridx][gridy];
@@ -162,37 +162,37 @@ void clear_grid(){
 }
 
 void glider_preset(int offset_x, int offset_y){
-	int glider[3][3] = {{1,0,0},{0,1,1},{1,1,0}};
-	int *glider_rows[3] = {glider[0], glider[1],glider[2]};
+	uint8_t glider[3][3] = {{1,0,0},{0,1,1},{1,1,0}};
+	uint8_t *glider_rows[3] = {glider[0], glider[1],glider[2]};
 	preset_to_grid(&glider[0], 3,3, offset_x, offset_y);
 }
 
 void glider_gun_preset(int offset_x, int offset_y){//helt klart det mest optimala sättet....
-	int *glider_gun_rows[15] = {glider_gun[0], glider_gun[1], glider_gun[2], glider_gun[3], glider_gun[4],
+	uint8_t *glider_gun_rows[15] = {glider_gun[0], glider_gun[1], glider_gun[2], glider_gun[3], glider_gun[4],
 								glider_gun[5], glider_gun[6], glider_gun[7], glider_gun[8], glider_gun[9], 
 								glider_gun[10], glider_gun[11], glider_gun[12], glider_gun[13], glider_gun[14]};
 	preset_to_grid(&glider_gun[0], 15,38, offset_x, offset_y);
 }
 
 void light_spaceship_preset(int offset_x, int offset_y){
-	int ship[4][5] = {{0,1,1,1,1},{1,0,0,0,1},{0,0,0,0,1},{1,0,0,1,0}};
-	int *ship_rows[4] = {ship[0], ship[1], ship[2], ship[3]};
+	uint8_t ship[4][5] = {{0,1,1,1,1},{1,0,0,0,1},{0,0,0,0,1},{1,0,0,1,0}};
+	uint8_t *ship_rows[4] = {ship[0], ship[1], ship[2], ship[3]};
 	preset_to_grid(&ship[0], 4,5, offset_x, offset_y);
 }
 
 void small_explosion_preset(int offset_x, int offset_y){
-	int small_explosion[4][3] = {{0,1,0},{1,1,1},{1,0,1},{0,1,0}};
-	int *small_rows[4] = {small_explosion[0], small_explosion[1], small_explosion[2], small_explosion[3]};
-	preset_to_grid(&small_rows[0], 4,3, offset_x, offset_y);
+	uint8_t small_explosion[4][3] = {{0,1,0},{1,1,1},{1,0,1},{0,1,0}};
+	uint8_t *small_rows[4] = {small_explosion[0], small_explosion[1], small_explosion[2], small_explosion[3]};
+	preset_to_grid(&small_explosion[0], 4,3, offset_x, offset_y);
 }
 
 void big_explosion_preset(int offset_x, int offset_y){
-	int big_explosion[5][5] = {{1,0,1,0,1},{1,0,0,0,1},{1,0,0,0,1},{1,0,0,0,1},{1,0,1,0,1}};
-	int *big_rows[5] = {big_explosion[0], big_explosion[1], big_explosion[2], big_explosion[3], big_explosion[4]};
-	preset_to_grid(&big_rows[0], 5,5, offset_x, offset_y);
+	uint8_t big_explosion[5][5] = {{1,0,1,0,1},{1,0,0,0,1},{1,0,0,0,1},{1,0,0,0,1},{1,0,1,0,1}};
+	uint8_t *big_rows[5] = {big_explosion[0], big_explosion[1], big_explosion[2], big_explosion[3], big_explosion[4]};
+	preset_to_grid(&big_explosion[0], 5,5, offset_x, offset_y);
 }
 
-void preset_to_grid(int *row_ptr, int rows, int col, int offset_x, int offset_y){
+void preset_to_grid(uint8_t *row_ptr, int rows, int col, int offset_x, int offset_y){
 	for(int y = 0; y < rows; row_ptr+=col, y++){	//#NonStandard #NonCare #fuckDaSystem
 		for(int x = 0; x < col; x++)
 			temp_grid[x + offset_x][y + offset_y] = row_ptr[x];
