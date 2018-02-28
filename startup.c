@@ -48,7 +48,7 @@ int main(int argc, char **argv)
 {
 	//init
 	mark->posx = 4;
-	mark->posy = 4;
+	mark->posy = 40;
 	init_app();
 	graphic_initalize();
 	ascii_init();
@@ -78,7 +78,8 @@ int main(int argc, char **argv)
 	 */
 
 	//int shapex = 3, shapey = 3;
-	//int shape[3][3] = {	{1,0,0},{0,1,1},{1,1,0}};
+	//int shape[3][3] = {	{1,0,0},
+	//						{0,1,1},{1,1,0}};
 						
 	//clear_grid();
 	//cursor_mode();
@@ -90,27 +91,37 @@ int main(int argc, char **argv)
 		}
 	}
 */
-	cursor_mode();
-	clear_buffers();
-	graphic_clear_screen();
-	print_grid();
-	clear_buffer(1);
-	swap_buffers();
+	
 	int rv = 0;
-	while(1)
-	{
-		clear_buffer(0);
-		for(int i = 0; i < 127; i++){
-			for(int j = 0; j < 63; j++){
-				rv = check_neighbors(i,j);
-				if(rv == 3 || rv == 12 || rv == 13) //3 i alla fall, 12/13 pupulated med 2/3 grannar
- 					pixel_dubbelbuffer(i,j);
-			}
-		}
-		
+	int delay = 0;
+	bool looping;
+	while(1){								//main loop
+		looping = true;
+		cursor_mode();
+		clear_buffers();
+		graphic_clear_screen();
+		print_grid();
 		swap_buffers();
-		delay_milli(40);
-		
+		while(looping){						//simulator loop
+			clear_buffer(0);
+			for(int i = 0; i < 127; i++){
+				for(int j = 0; j < 63; j++){
+					rv = check_neighbors(i,j);
+					if(rv == 3 || rv == 12 || rv == 13) //3 i alla fall, 12/13 pupulated med 2/3 grannar
+						pixel_dubbelbuffer(i,j);
+				}
+			}
+			switch (keyb()){
+				case 3: looping = false; break;
+				case 7: delay += 100; break;
+				case 9: 
+					delay -= 100; 
+					if(delay < 0) delay = 0;
+					break;
+			}
+			swap_buffers();
+			delay_milli(40);
+		}
 	}
 }
 
@@ -128,6 +139,19 @@ void clear_grid(){
 		for(int j = 0; j < gridy; j++){
 			temp_grid[i][j] = 0;
 		}
+	}
+}
+
+void glider_preset(int offset_x, int offset_y){
+	int glider[3][3] = {{1,0,0},{0,1,1},{1,1,0}};
+	int *glider_rows[3] = {glider[0], glider[1],glider[2]};
+	preset_to_grid(&glider[0], 3,3, offset_x, offset_y);
+}
+
+void preset_to_grid(int *row_ptr, int rows, int col, int offset_x, int offset_y){
+	for(int y = 0; y < rows; row_ptr+=col, y++){	//#NonStandard #NonCare #fuckDaSystem
+		for(int x = 0; x < col; x++)
+			temp_grid[x + offset_x][y + offset_y] = row_ptr[x];
 	}
 }
 
@@ -169,10 +193,10 @@ void cursor_mode(){
 			case 4: mark->posx--; break;
 			case 2: mark->posy++; break;
 			case 8: mark->posy--; break;
-			case 5: 
-				temp_grid[mark->posx + 2][mark->posy + 2] = 1;
-				break;
-			case 1: looping = false; break;			
+			case 5: temp_grid[mark->posx + 2][mark->posy + 2] = 1;break;
+			case 1: looping = false; break;
+			case 7: clear_grid(); break;
+			case 0xA: glider_preset(mark->posx + 2,mark->posy + 2);
 		}
 		clear_buffer(0);
 		mark->draw(mark);
