@@ -43,23 +43,23 @@ void init_app(void)
 #define glider_guny 15
 
 PTR_OBJ mark = &marker;
-uint8_t temp_grid[gridx][gridy];
-int glider_gun[glider_guny][glider_gunx] =   {{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,1,1, 0,0,0,0,0, 0,0,0,0,1, 1,0,0},//1
-								{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,1,0,1, 0,0,0,0,0, 0,0,0,0,1, 1,0,0},
-								{1,1,0,0,0, 0,0,0,0,1, 1,0,0,0,0, 0,0,0,0,0, 0,0,1,1,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},
-								{1,1,0,0,0, 0,0,0,1,0, 1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},
-								{0,0,0,0,0, 0,0,0,1,1, 0,0,0,0,0, 0,1,1,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},//5
-								{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1,0,1,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},
-								{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},
-								{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 1,1,0},
-								{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 1,0,1},
-								{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 1,0,0},//10
-								{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},
-								{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},
-								{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1, 1,1,0,0,0, 0,0,0,0,0, 0,0,0},
-								{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},
-								{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 1,0,0,0,0, 0,0,0,0,0, 0,0,0}//15
-	};
+uint8_t temp_grid[gridx][gridy];			   //1					   3					 5					   7
+int glider_gun[glider_guny][glider_gunx] = {{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,1,1, 0,0,0,0,0, 0,0,0,0,1, 1,0,0},//1
+											{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,1,0,1, 0,0,0,0,0, 0,0,0,0,1, 1,0,0},
+											{1,1,0,0,0, 0,0,0,0,1, 1,0,0,0,0, 0,0,0,0,0, 0,0,1,1,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},
+											{1,1,0,0,0, 0,0,0,1,0, 1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},
+											{0,0,0,0,0, 0,0,0,1,1, 0,0,0,0,0, 0,1,1,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},//5
+											{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1,0,1,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},
+											{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},
+											{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 1,1,0},
+											{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 1,0,1},
+											{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 1,0,0},//10
+											{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},
+											{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},
+											{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1, 1,1,0,0,0, 0,0,0,0,0, 0,0,0},
+											{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1, 0,0,0,0,0, 0,0,0,0,0, 0,0,0},
+											{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 1,0,0,0,0, 0,0,0,0,0, 0,0,0}//15
+};
 
 //int grid[gridx][gridy], gridbuffer[gridx][gridy];
 
@@ -161,10 +161,13 @@ void clear_grid(){
 	}
 }
 
-void glider_gun_preset(int offset_x, int offset_y){//helt klart det mes optimala sättet....
-								   //1					   3					 5					   7
-	
-	
+void glider_preset(int offset_x, int offset_y){
+	int glider[3][3] = {{1,0,0},{0,1,1},{1,1,0}};
+	int *glider_rows[3] = {glider[0], glider[1],glider[2]};
+	preset_to_grid(&glider[0], 3,3, offset_x, offset_y);
+}
+
+void glider_gun_preset(int offset_x, int offset_y){//helt klart det mest optimala sättet....
 	int *glider_gun_rows[15] = {glider_gun[0], glider_gun[1], glider_gun[2], glider_gun[3], glider_gun[4],
 								glider_gun[5], glider_gun[6], glider_gun[7], glider_gun[8], glider_gun[9], 
 								glider_gun[10], glider_gun[11], glider_gun[12], glider_gun[13], glider_gun[14]};
@@ -177,10 +180,16 @@ void light_spaceship_preset(int offset_x, int offset_y){
 	preset_to_grid(&ship[0], 4,5, offset_x, offset_y);
 }
 
-void glider_preset(int offset_x, int offset_y){
-	int glider[3][3] = {{1,0,0},{0,1,1},{1,1,0}};
-	int *glider_rows[3] = {glider[0], glider[1],glider[2]};
-	preset_to_grid(&glider[0], 3,3, offset_x, offset_y);
+void small_explosion_preset(int offset_x, int offset_y){
+	int small_explosion[4][3] = {{0,1,0},{1,1,1},{1,0,1},{0,1,0}};
+	int *small_rows[4] = {small_explosion[0], small_explosion[1], small_explosion[2], small_explosion[3]};
+	preset_to_grid(&small_rows[0], 4,3, offset_x, offset_y);
+}
+
+void big_explosion_preset(int offset_x, int offset_y){
+	int big_explosion[5][5] = {{1,0,1,0,1},{1,0,0,0,1},{1,0,0,0,1},{1,0,0,0,1},{1,0,1,0,1}};
+	int *big_rows[5] = {big_explosion[0], big_explosion[1], big_explosion[2], big_explosion[3], big_explosion[4]};
+	preset_to_grid(&big_rows[0], 5,5, offset_x, offset_y);
 }
 
 void preset_to_grid(int *row_ptr, int rows, int col, int offset_x, int offset_y){
@@ -224,17 +233,18 @@ void cursor_mode(){
 		uint8_t dir;
 		dir = keyb();
 		switch(dir){
-			case 6: mark->posx++; break;
-			case 4: mark->posx--; break;
-			case 8: mark->posy++; break;
-			case 2: mark->posy--; break;
 			case 1: looping = false; break;
+			case 2: mark->posy--; break;
+			case 4: mark->posx--; break;
+			case 5: temp_grid[mark->posx + 2][mark->posy + 2] = 1;break;
+			case 6: mark->posx++; break;
 			case 7: clear_grid(); break;
-			case 5: temp_grid[mark->posx + 2][mark->posy + 2] = 1;			break;
+			case 8: mark->posy++; break;
 			case 0xA: glider_preset(mark->posx + 2,mark->posy + 2);			break;
-			case 0xB: light_spaceship_preset(mark->posx + 2,mark->posy + 2);break;
-			case 0xC: glider_preset(mark->posx + 2,mark->posy + 2);			break;
-			case 0xD: glider_gun_preset(mark->posx + 2,mark->posy + 2);		break;
+			case 0xB: glider_gun_preset(mark->posx + 2,mark->posy + 2);		break;
+			case 0xC: small_explosion_preset(mark->posx + 2,mark->posy + 2);break;
+			case 0xD: big_explosion_preset(mark->posx + 2,mark->posy + 2);	break;
+			case 0xF: light_spaceship_preset(mark->posx + 2,mark->posy + 2);break;
 		}
 		clear_buffer(0);
 		mark->draw(mark);
