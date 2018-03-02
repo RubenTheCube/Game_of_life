@@ -78,7 +78,7 @@ void ascii_init(void){
 	while(ascii_read_status() & 0x80)
 		;
 	delay_mikro(8);
-	ascii_write_cmd(0x0E);
+	ascii_write_cmd(0x0C);
 	delay_mikro(39);
 	
 	while(ascii_read_status() & 0x80)
