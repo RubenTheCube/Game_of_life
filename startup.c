@@ -7,6 +7,8 @@
 #include "keypad.h"
 #include "portar.h"
 #include "objects.h"
+
+#define DELAY_TEXT 2000
  
 void startup(void) __attribute__((naked)) __attribute__((section (".start_section")) );
 
@@ -66,8 +68,8 @@ uint8_t glider_gun[glider_guny][glider_gunx] = {{0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0
 int main(int argc, char **argv)
 {
 	//init
-	mark->posx = 4;
-	mark->posy = 40;
+	mark->posx = 64;
+	mark->posy = 32;
 	init_app();
 	graphic_initalize();
 	ascii_init();
@@ -75,11 +77,11 @@ int main(int argc, char **argv)
 	graphic_clear_screen();
 	clear_buffers();
 	clear_grid();
-	/*
+	
 	//skriv intro till spelet
 	char *s;
 	char skapare[] = "Rob's & Mr.O's";
-	char titel[] = "Game of life";
+	char titel[] = "Game of Life";
 
 	ascii_gotoxy(1,1);
 	s = skapare;
@@ -93,8 +95,8 @@ int main(int argc, char **argv)
 	while(ascii_read_status() & 0x80)
 			;
 	delay_mikro(8);
-	delay_milli(4000);
-	 */
+	delay_milli(DELAY_TEXT);
+	 
 
 	//int shapex = 3, shapey = 3;
 	//int shape[3][3] = {	{1,0,0},
@@ -112,18 +114,40 @@ int main(int argc, char **argv)
 */
 	
 	int rv = 0;
-	int delay = 0;
+	int delay = 600;
 	bool looping;
 	while(1){								//main loop
 		looping = true;
 		cursor_mode();
+	
+	
 		clear_buffers();
 		graphic_clear_screen();
 		print_grid();
+		//clear_buffer(0xFF);
 		swap_buffers();
+		
+		char *s;
+		ascii_write_cmd(1);
+		delay_milli(2);
+		char instruktion[] = "Simulator mode";
+		ascii_gotoxy(1,1);
+		s = instruktion;
+		while(*s)
+			ascii_write_char(*s++);
+		ascii_gotoxy(1,2);
+		char instruktion1[] = "7 !fort | 9 fort";
+		s = instruktion1;
+		while(*s)
+			ascii_write_char(*s++);
+		ascii_gotoxy(1,2);
+		delay_milli(DELAY_TEXT);
+		
+		
+		
 		while(looping){						//simulator loop
 			clear_buffer(0);
-			for(int i = 0; i < 127; i++){
+			for(int i = 0; i < 128; i++){
 				for(int j = 0; j < 63; j++){
 					rv = check_neighbors(i,j);
 					if(rv == 3 || rv == 12 || rv == 13) //3 i alla fall, 12/13 pupulated med 2/3 grannar
@@ -139,7 +163,7 @@ int main(int argc, char **argv)
 					break;
 			}
 			swap_buffers();
-			delay_milli(40);
+			delay_milli(delay);
 		}
 	}
 }
@@ -162,33 +186,33 @@ void clear_grid(){
 }
 
 void glider_preset(int offset_x, int offset_y){
-	uint8_t glider[3][3] = {{1,0,0},{0,1,1},{1,1,0}};
-	uint8_t *glider_rows[3] = {glider[0], glider[1],glider[2]};
+	static uint8_t glider[3][3] = {{1,0,0},{0,1,1},{1,1,0}};
+	static uint8_t *glider_rows[3] = {glider[0], glider[1],glider[2]};
 	preset_to_grid(&glider[0], 3,3, offset_x, offset_y);
 }
 
 void glider_gun_preset(int offset_x, int offset_y){//helt klart det mest optimala sättet....
-	uint8_t *glider_gun_rows[15] = {glider_gun[0], glider_gun[1], glider_gun[2], glider_gun[3], glider_gun[4],
+	static uint8_t *glider_gun_rows[15] = {glider_gun[0], glider_gun[1], glider_gun[2], glider_gun[3], glider_gun[4],
 								glider_gun[5], glider_gun[6], glider_gun[7], glider_gun[8], glider_gun[9], 
 								glider_gun[10], glider_gun[11], glider_gun[12], glider_gun[13], glider_gun[14]};
 	preset_to_grid(&glider_gun[0], 15,38, offset_x, offset_y);
 }
 
 void light_spaceship_preset(int offset_x, int offset_y){
-	uint8_t ship[4][5] = {{0,1,1,1,1},{1,0,0,0,1},{0,0,0,0,1},{1,0,0,1,0}};
-	uint8_t *ship_rows[4] = {ship[0], ship[1], ship[2], ship[3]};
+	static uint8_t ship[4][5] = {{0,1,1,1,1},{1,0,0,0,1},{0,0,0,0,1},{1,0,0,1,0}};
+	static uint8_t *ship_rows[4] = {ship[0], ship[1], ship[2], ship[3]};
 	preset_to_grid(&ship[0], 4,5, offset_x, offset_y);
 }
 
 void small_explosion_preset(int offset_x, int offset_y){
-	uint8_t small_explosion[4][3] = {{0,1,0},{1,1,1},{1,0,1},{0,1,0}};
-	uint8_t *small_rows[4] = {small_explosion[0], small_explosion[1], small_explosion[2], small_explosion[3]};
+	static uint8_t small_explosion[4][3] = {{0,1,0},{1,1,1},{1,0,1},{0,1,0}};
+	static uint8_t *small_rows[4] = {small_explosion[0], small_explosion[1], small_explosion[2], small_explosion[3]};
 	preset_to_grid(&small_explosion[0], 4,3, offset_x, offset_y);
 }
 
 void big_explosion_preset(int offset_x, int offset_y){
-	uint8_t big_explosion[5][5] = {{1,0,1,0,1},{1,0,0,0,1},{1,0,0,0,1},{1,0,0,0,1},{1,0,1,0,1}};
-	uint8_t *big_rows[5] = {big_explosion[0], big_explosion[1], big_explosion[2], big_explosion[3], big_explosion[4]};
+	static uint8_t big_explosion[5][5] = {{1,0,1,0,1},{1,0,0,0,1},{1,0,0,0,1},{1,0,0,0,1},{1,0,1,0,1}};
+	static uint8_t *big_rows[5] = {big_explosion[0], big_explosion[1], big_explosion[2], big_explosion[3], big_explosion[4]};
 	preset_to_grid(&big_explosion[0], 5,5, offset_x, offset_y);
 }
 
@@ -201,20 +225,25 @@ void preset_to_grid(uint8_t *row_ptr, int rows, int col, int offset_x, int offse
 
 void cursor_mode(){
 	bool looping = true;
-/*
+	bool pressed = false;
+	static bool firstime = true; 
+	uint8_t steg = 1;
 	char *s;
+	if(firstime){
+		ascii_write_cmd(1);
+		delay_milli(2);
+		char instruktion[] = "Make din organism";
+		ascii_gotoxy(1,1);
+		s = instruktion;
+		while(*s)
+			ascii_write_char(*s++);
+		delay_milli(DELAY_TEXT);
+		firstime = false;
+	}
+	ascii_gotoxy(1,1);
 	ascii_write_cmd(1);
 	delay_milli(2);
-	char instruktion[] = "make din organism";
-	ascii_gotoxy(1,1);
-	s = instruktion;
-	while(*s)
-		ascii_write_char(*s++);
-	ascii_gotoxy(1,1);
-	delay_milli(4000);
-	ascii_write_cmd(1);
-	delay_milli(2);
-	char instruktion1[] = "press 5 to place";
+	char instruktion1[] = "Press 5 to place!";
 	s = instruktion1;
 	while(*s)
 		ascii_write_char(*s++);
@@ -226,25 +255,26 @@ void cursor_mode(){
 	delay_milli(1000);
 	while(ascii_read_status() & 0x80);
 	delay_mikro(8);
-	delay_milli(4000);
-	*/
+	
 	
 	while(looping){
 		uint8_t dir;
 		dir = keyb();
 		switch(dir){
-			case 1: looping = false; break;
-			case 2: mark->posy--; break;
-			case 4: mark->posx--; break;
+			case 0xE: looping = false; break;
+			case 2: if(!pressed) mark->posy -= steg; pressed = true; break;
+			case 4: if(!pressed) mark->posx -= steg; pressed = true; break;
 			case 5: temp_grid[mark->posx + 2][mark->posy + 2] = 1;break;
-			case 6: mark->posx++; break;
+			case 6: if(!pressed) mark->posx += steg; pressed = true; break;
 			case 7: clear_grid(); break;
-			case 8: mark->posy++; break;
+			case 8: if(!pressed) mark->posy += steg; pressed = true; break;
 			case 0xA: glider_preset(mark->posx + 2,mark->posy + 2);			break;
 			case 0xB: glider_gun_preset(mark->posx + 2,mark->posy + 2);		break;
 			case 0xC: small_explosion_preset(mark->posx + 2,mark->posy + 2);break;
 			case 0xD: big_explosion_preset(mark->posx + 2,mark->posy + 2);	break;
 			case 0xF: light_spaceship_preset(mark->posx + 2,mark->posy + 2);break;
+			case 0xFF:pressed = false;break;
+			case 0: if(!pressed) steg = (steg == 1) ? 20 : 1;pressed = true; break;
 		}
 		clear_buffer(0);
 		mark->draw(mark);
